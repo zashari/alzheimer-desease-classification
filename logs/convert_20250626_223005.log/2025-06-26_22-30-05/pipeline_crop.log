@@ -1,0 +1,85 @@
+2025-06-26 22:30:13 - pipeline_crop - INFO - Starting crop step
+2025-06-26 22:30:13 - pipeline_crop - INFO - 
+🧠 STEP 7: IMAGE CROPPING
+2025-06-26 22:30:13 - pipeline_crop - INFO - ============================================================
+2025-06-26 22:30:13 - pipeline_crop - INFO - Found 2889 PNG files to process
+2025-06-26 22:30:13 - pipeline_crop - INFO - 
+Input distribution:
+2025-06-26 22:30:13 - pipeline_crop - INFO -   train/AD: 273 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   train/CN: 402 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   train total: 675 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   val/AD: 57 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   val/CN: 87 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   val total: 144 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   test/AD: 60 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   test/CN: 84 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   test total: 144 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   axial total: 963 files
+
+2025-06-26 22:30:13 - pipeline_crop - INFO -   train/AD: 273 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   train/CN: 402 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   train total: 675 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   val/AD: 57 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   val/CN: 87 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   val total: 144 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   test/AD: 60 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   test/CN: 84 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   test total: 144 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   coronal total: 963 files
+
+2025-06-26 22:30:13 - pipeline_crop - INFO -   train/AD: 273 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   train/CN: 402 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   train total: 675 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   val/AD: 57 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   val/CN: 87 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   val total: 144 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   test/AD: 60 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   test/CN: 84 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   test total: 144 files
+2025-06-26 22:30:13 - pipeline_crop - INFO -   sagittal total: 963 files
+
+2025-06-26 22:30:19 - pipeline_crop - INFO - 
+============================================================
+2025-06-26 22:30:19 - pipeline_crop - INFO - CROPPING COMPLETE
+2025-06-26 22:30:19 - pipeline_crop - INFO - ============================================================
+2025-06-26 22:30:19 - pipeline_crop - INFO - Files processed: 2889
+2025-06-26 22:30:19 - pipeline_crop - INFO - Files skipped (already exist): 0
+2025-06-26 22:30:19 - pipeline_crop - INFO - Total files handled: 2889
+2025-06-26 22:30:19 - pipeline_crop - INFO - 
+Output distribution:
+2025-06-26 22:30:19 - pipeline_crop - INFO -   train/AD: 273 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   train/CN: 402 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   train total: 675 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   val/AD: 57 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   val/CN: 87 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   val total: 144 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   test/AD: 60 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   test/CN: 84 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   test total: 144 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   axial total: 963 files
+
+2025-06-26 22:30:19 - pipeline_crop - INFO -   train/AD: 273 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   train/CN: 402 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   train total: 675 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   val/AD: 57 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   val/CN: 87 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   val total: 144 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   test/AD: 60 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   test/CN: 84 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   test total: 144 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   coronal total: 963 files
+
+2025-06-26 22:30:19 - pipeline_crop - INFO -   train/AD: 273 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   train/CN: 402 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   train total: 675 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   val/AD: 57 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   val/CN: 87 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   val total: 144 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   test/AD: 60 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   test/CN: 84 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   test total: 144 files
+2025-06-26 22:30:19 - pipeline_crop - INFO -   sagittal total: 963 files
+
+2025-06-26 22:30:19 - pipeline_crop - INFO - 
+✅ Step 7: Cropping complete! Output at ../datasets/ADNI_1_5_T/7_cropped
+2025-06-26 22:30:19 - pipeline_crop - INFO - Image cropping completed

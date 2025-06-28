@@ -1,0 +1,152 @@
+2025-06-25 22:17:44 - pipeline_nifti - INFO - Starting NIfTI processing step
+2025-06-25 22:17:44 - pipeline_nifti - INFO - 
+🧠 STEP 2: SKULL STRIPPING
+2025-06-25 22:17:44 - pipeline_nifti - INFO - ================================================================================
+2025-06-25 22:17:44 - pipeline_nifti - INFO - ✅ Found FSL BET executable at: /Users/AndiZakyAshari/fsl/bin/bet
+2025-06-25 22:17:44 - pipeline_nifti - INFO - 🔍 Scanning for sequential data and building task list...
+2025-06-25 22:17:44 - pipeline_nifti - INFO - 
+📊 Processing TRAIN split (446 subjects):
+2025-06-25 22:17:44 - pipeline_nifti - INFO -   • Found 446 subjects with complete sequences out of 446.
+2025-06-25 22:17:44 - pipeline_nifti - INFO - 
+📊 Processing VAL split (94 subjects):
+2025-06-25 22:17:44 - pipeline_nifti - INFO -   • Found 94 subjects with complete sequences out of 94.
+2025-06-25 22:17:44 - pipeline_nifti - INFO - 
+📊 Processing TEST split (98 subjects):
+2025-06-25 22:17:44 - pipeline_nifti - INFO -   • Found 98 subjects with complete sequences out of 98.
+2025-06-25 22:17:44 - pipeline_nifti - INFO - 
+----------------------------------------
+2025-06-25 22:17:44 - pipeline_nifti - INFO - 📈 OVERALL INPUT STATISTICS:
+2025-06-25 22:17:44 - pipeline_nifti - INFO -   • Total subjects found: 638
+2025-06-25 22:17:44 - pipeline_nifti - INFO -   • Complete sequences:   638
+2025-06-25 22:17:44 - pipeline_nifti - INFO -   • Incomplete sequences: 0
+2025-06-25 22:17:44 - pipeline_nifti - INFO -   • Total files to process: 1914
+2025-06-25 22:17:44 - pipeline_nifti - INFO - ----------------------------------------
+2025-06-25 22:17:44 - pipeline_nifti - INFO - 🚀 Starting skull stripping with up to 12 parallel threads...
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 
+================================================================================
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 📊 SKULL STRIPPING SUMMARY
+2025-06-26 13:33:20 - pipeline_nifti - INFO - ================================================================================
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 
+⚡ Processing Results:
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   - Success   : 1885 ( 98.5%)
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   - Error     :   12 (  0.6%)
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   - Timeout   :   17 (  0.9%)
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 
+📁 Output Structure Verification:
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   - train: 446 subjects, 1322 brain files created.
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   - val  :  94 subjects,  280 brain files created.
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   - test :  98 subjects,  286 brain files created.
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 
+✅ Step 2: Skull stripping complete!
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 📂 Output directory: ../datasets/ADNI_1_5_T/2_skull_stripping_sequential
+2025-06-26 13:33:20 - pipeline_nifti - INFO - ================================================================================
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 
+🧠 STEP 3: ROI REGISTRATION & WARPING
+2025-06-26 13:33:20 - pipeline_nifti - INFO - ================================================================================
+2025-06-26 13:33:20 - pipeline_nifti - INFO -    STRICT MODE: Subjects without a complete temporal sequence will be EXCLUDED.
+2025-06-26 13:33:20 - pipeline_nifti - INFO - --------------------------------------------------------------------------------
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 🔍 Scanning for complete skull-stripped sequences...
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 
+📊 Processing TRAIN split (446 subjects):
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 
+📊 Processing VAL split (94 subjects):
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 
+📊 Processing TEST split (98 subjects):
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 
+----------------------------------------
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 📈 INPUT VALIDATION SUMMARY:
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   • Total subjects scanned:            638
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   • Subjects with complete sequences:  621
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   • Subjects excluded (incomplete):    17
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   • Data retention rate for this step: 97.3%
+2025-06-26 13:33:20 - pipeline_nifti - INFO -   • Total brain files to process:      1863
+2025-06-26 13:33:20 - pipeline_nifti - INFO - ----------------------------------------
+2025-06-26 13:33:20 - pipeline_nifti - WARNING - ❌ Excluded 17 subjects due to missing files:
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/067_S_0076
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/023_S_0625
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/005_S_0546
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/027_S_0417
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/014_S_0563
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/053_S_1044
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/052_S_0952
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/018_S_0369
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/100_S_0190
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   - train/073_S_0089
+2025-06-26 13:33:20 - pipeline_nifti - WARNING -   ... and 7 more.
+2025-06-26 13:33:20 - pipeline_nifti - INFO - 🚀 Starting ROI registration with up to 12 parallel threads...
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 
+================================================================================
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 📊 ROI REGISTRATION SUMMARY
+2025-06-26 15:55:04 - pipeline_nifti - INFO - ================================================================================
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 
+⚡ Processing Results:
+2025-06-26 15:55:04 - pipeline_nifti - INFO -   - Success   : 1863 (100.0%)
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 
+📁 Output Structure Verification:
+2025-06-26 15:55:04 - pipeline_nifti - INFO -   - train: 436 subjects, 1308 ROI masks, 2616 matrix files.
+2025-06-26 15:55:04 - pipeline_nifti - INFO -   - val  :  92 subjects,  276 ROI masks,  552 matrix files.
+2025-06-26 15:55:04 - pipeline_nifti - INFO -   - test :  93 subjects,  279 ROI masks,  558 matrix files.
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 
+✅ Step 3: ROI registration complete!
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 📂 Output directory: ../datasets/ADNI_1_5_T/3_roi_subj_space_sequential
+2025-06-26 15:55:04 - pipeline_nifti - INFO - ================================================================================
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 
+🧠 STEP 4: OPTIMAL SLICE EXTRACTION
+2025-06-26 15:55:04 - pipeline_nifti - INFO - ================================================================================
+2025-06-26 15:55:04 - pipeline_nifti - INFO -    STRICT MODE: Subjects without a complete set of ROI/brain files will be EXCLUDED.
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 
+🔍 Scanning for complete temporal ROI and brain file pairs...
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 
+----------------------------------------
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 📈 INPUT VALIDATION SUMMARY:
+2025-06-26 15:55:04 - pipeline_nifti - INFO -   • Total subjects scanned:            621
+2025-06-26 15:55:04 - pipeline_nifti - INFO -   • Subjects with complete sequences:  621
+2025-06-26 15:55:04 - pipeline_nifti - INFO -   • Subjects excluded (incomplete):    0
+2025-06-26 15:55:04 - pipeline_nifti - INFO -   • Data retention rate for this step: 100.0%
+2025-06-26 15:55:04 - pipeline_nifti - INFO -   • Total extraction tasks:            5589 (1863 per plane)
+2025-06-26 15:55:04 - pipeline_nifti - INFO - ----------------------------------------
+2025-06-26 15:55:04 - pipeline_nifti - INFO - 
+🚀 Processing AXIAL slices with up to 12 threads...
+2025-06-26 15:57:14 - pipeline_nifti - INFO - 
+🚀 Processing CORONAL slices with up to 12 threads...
+2025-06-26 15:59:23 - pipeline_nifti - INFO - 
+🚀 Processing SAGITTAL slices with up to 12 threads...
+2025-06-26 16:01:33 - pipeline_nifti - INFO - 
+================================================================================
+2025-06-26 16:01:33 - pipeline_nifti - INFO - 📊 OPTIMAL SLICE EXTRACTION SUMMARY
+2025-06-26 16:01:33 - pipeline_nifti - INFO - ================================================================================
+2025-06-26 16:01:33 - pipeline_nifti - INFO - 
+⚡ AXIAL Results (1863 tasks):
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Success:    1863 (100.0%)
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Skipped:    0
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Empty ROI:  0
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Errors:     0
+2025-06-26 16:01:33 - pipeline_nifti - INFO - 
+⚡ CORONAL Results (1863 tasks):
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Success:    1863 (100.0%)
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Skipped:    0
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Empty ROI:  0
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Errors:     0
+2025-06-26 16:01:33 - pipeline_nifti - INFO - 
+⚡ SAGITTAL Results (1863 tasks):
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Success:    1863 (100.0%)
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Skipped:    0
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Empty ROI:  0
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Errors:     0
+2025-06-26 16:01:33 - pipeline_nifti - INFO - 
+✅ Step 4: Optimal slice extraction complete!
+2025-06-26 16:01:33 - pipeline_nifti - INFO - 📂 Output directories:
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Axial: ../datasets/ADNI_1_5_T/4_optimal_axial_sequential
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Coronal: ../datasets/ADNI_1_5_T/4_optimal_coronal_sequential
+2025-06-26 16:01:33 - pipeline_nifti - INFO -   - Sagittal: ../datasets/ADNI_1_5_T/4_optimal_sagittal_sequential
+2025-06-26 16:01:33 - pipeline_nifti - INFO - ================================================================================
+2025-06-26 16:01:33 - pipeline_nifti - INFO - 
+Processing axial sequences...
+2025-06-26 16:01:34 - pipeline_nifti - INFO - Saved detailed visualization to visualizations/processing_pipeline/temporal_sequence/temporal_sequence_axial_detailed.png
+2025-06-26 16:01:34 - pipeline_nifti - INFO - 
+Processing coronal sequences...
+2025-06-26 16:01:34 - pipeline_nifti - INFO - Saved detailed visualization to visualizations/processing_pipeline/temporal_sequence/temporal_sequence_coronal_detailed.png
+2025-06-26 16:01:34 - pipeline_nifti - INFO - 
+Processing sagittal sequences...
+2025-06-26 16:01:34 - pipeline_nifti - INFO - Saved detailed visualization to visualizations/processing_pipeline/temporal_sequence/temporal_sequence_sagittal_detailed.png
+2025-06-26 16:01:34 - pipeline_nifti - INFO - NIfTI processing completed

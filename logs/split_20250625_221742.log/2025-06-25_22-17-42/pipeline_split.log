@@ -1,0 +1,83 @@
+2025-06-25 22:17:42 - pipeline_split - INFO - Starting dataset splitting step
+2025-06-25 22:17:42 - pipeline_split - INFO - 🧠 STEP 1: SEQUENTIAL ADNI DATA SPLITTER
+2025-06-25 22:17:42 - pipeline_split - INFO - ================================================================================
+2025-06-25 22:17:42 - pipeline_split - INFO - 📋 Requirements:
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Subjects must have all visits: ['sc', 'm06', 'm12']
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Split proportions: Train=0.7, Val=0.15, Test=0.15
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Output Directory: ../datasets/ADNI_1_5_T/1_splitted_sequential
+2025-06-25 22:17:42 - pipeline_split - INFO - --------------------------------------------------------------------------------
+2025-06-25 22:17:42 - pipeline_split - INFO - 📊 Initial dataset: 2294 total rows, 639 unique subjects.
+2025-06-25 22:17:42 - pipeline_split - INFO - ✓ After resolving duplicates: 1917 rows remain.
+2025-06-25 22:17:42 - pipeline_split - INFO - 
+================================================================================
+2025-06-25 22:17:42 - pipeline_split - INFO - 🔍 DATA AVAILABILITY ANALYSIS
+2025-06-25 22:17:42 - pipeline_split - INFO - ================================================================================
+2025-06-25 22:17:42 - pipeline_split - INFO - 📊 VISIT COMPLETENESS ANALYSIS:
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Total subjects analyzed: 639
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Complete sequences (all ['sc', 'm06', 'm12']): 638
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Incomplete sequences: 1
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Data retention rate: 99.8%
+2025-06-25 22:17:42 - pipeline_split - INFO - 
+📋 COMPLETE SUBJECTS BY DIAGNOSTIC GROUP:
+2025-06-25 22:17:42 - pipeline_split - INFO -   • AD: 133 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO -   • CN: 195 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO -   • MCI: 310 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO - 
+================================================================================
+2025-06-25 22:17:42 - pipeline_split - INFO - 🎲 STRATIFIED SUBJECT-LEVEL SPLITTING
+2025-06-25 22:17:42 - pipeline_split - INFO - ================================================================================
+2025-06-25 22:17:42 - pipeline_split - INFO - 📊 Processing CN group (195 subjects):
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Train: 136 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Val:   29 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Test:  30 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO - 📊 Processing AD group (133 subjects):
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Train: 93 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Val:   19 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Test:  21 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO - 📊 Processing MCI group (310 subjects):
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Train: 217 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Val:   46 subjects
+2025-06-25 22:17:42 - pipeline_split - INFO -   • Test:  47 subjects
+2025-06-25 22:17:43 - pipeline_split - INFO - 
+✓ Final dataset for processing: 1914 rows (638 subjects × 3 visits)
+2025-06-25 22:17:43 - pipeline_split - INFO - 
+💾 SAVING METADATA...
+2025-06-25 22:17:43 - pipeline_split - INFO -   ✓ Saved train.csv: 1338 rows
+2025-06-25 22:17:43 - pipeline_split - INFO -   ✓ Saved val.csv: 282 rows
+2025-06-25 22:17:43 - pipeline_split - INFO -   ✓ Saved test.csv: 294 rows
+2025-06-25 22:17:43 - pipeline_split - INFO -   ✓ Saved metadata_split.csv: 1914 rows
+2025-06-25 22:17:43 - pipeline_split - INFO - 
+================================================================================
+2025-06-25 22:17:43 - pipeline_split - INFO - 📁 COPYING/LINKING NIFTI FILES (use_symlinks=True)
+2025-06-25 22:17:43 - pipeline_split - INFO - ================================================================================
+2025-06-25 22:17:44 - pipeline_split - INFO - 
+================================================================================
+2025-06-25 22:17:44 - pipeline_split - INFO - 📊 COMPREHENSIVE SUMMARY REPORT
+2025-06-25 22:17:44 - pipeline_split - INFO - ================================================================================
+2025-06-25 22:17:44 - pipeline_split - INFO - 
+🔍 FINAL SPLIT DISTRIBUTION (Subject counts):
+2025-06-25 22:17:44 - pipeline_split - INFO - 
+Group  AD   CN  MCI
+Split              
+test   21   30   47
+train  93  136  217
+val    19   29   46
+2025-06-25 22:17:44 - pipeline_split - INFO - 
+📋 FINAL SPLIT DISTRIBUTION (Image counts):
+2025-06-25 22:17:44 - pipeline_split - INFO - 
+Group   AD   CN  MCI
+Split               
+test    63   90  141
+train  279  408  651
+val     57   87  138
+2025-06-25 22:17:44 - pipeline_split - INFO - 
+📁 FILE COPY STATISTICS:
+2025-06-25 22:17:44 - pipeline_split - INFO -   • Train: 1338 new files, 0 already exist, 0 errors.
+2025-06-25 22:17:44 - pipeline_split - INFO -   • Val  : 282 new files, 0 already exist, 0 errors.
+2025-06-25 22:17:44 - pipeline_split - INFO -   • Test : 294 new files, 0 already exist, 0 errors.
+2025-06-25 22:17:44 - pipeline_split - INFO - 
+================================================================================
+2025-06-25 22:17:44 - pipeline_split - INFO - ✅ STEP 1: SEQUENTIAL SPLITTING COMPLETE!
+2025-06-25 22:17:44 - pipeline_split - INFO - 📂 Output directory: ../datasets/ADNI_1_5_T/1_splitted_sequential
+2025-06-25 22:17:44 - pipeline_split - INFO - ================================================================================
+2025-06-25 22:17:44 - pipeline_split - INFO - Dataset splitting completed

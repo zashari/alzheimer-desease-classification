@@ -1,14 +1,15 @@
-pandas
-tqdm
-Pillow
-numpy
-nibabel
-matplotlib
+numpy>=1.24.0,<2.0.0
+pandas>=2.0.0
+scikit-image>=0.21.0  # for image processing functions
+nibabel>=5.1.0        # for NIfTI file handling
+matplotlib>=3.7.0     # for visualization
+seaborn>=0.12.0      # for enhanced plotting
+opencv-python>=4.8.0  # for image processing
+scipy>=1.10.0        # for scientific computing
+tqdm>=4.65.0         # for progress bars
+Pillow>=10.0.0       # for image handling
+imgaug==0.4.0        # for image augmentation
 ipython
-scikit-learn
-opencv-python
-scipy
 torch
 torchvision
 timm
-seaborn

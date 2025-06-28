@@ -4,218 +4,254 @@
 # This module contains functions for visualizing the data at various
 # stages of the pipeline to perform Quality Control (QC).
 
+import os
 import random
 from pathlib import Path
 from collections import defaultdict
+import logging
 
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import seaborn as sns
-import pandas as pd
-import numpy as np
-import nibabel as nib
 import cv2
-from PIL import Image
 
-# Import configurations and utilities
-from configs import config
-from utils import utils
+# Constants for visualization
+VISIT_INFO = {
+    'sc': {'name': 'Screening', 'color': '#2E8B57', 'description': 'Baseline visit'},
+    'm06': {'name': '6 Months', 'color': '#4682B4', 'description': '6-month follow-up'},
+    'm12': {'name': '12 Months', 'color': '#8B0000', 'description': '12-month follow-up'}
+}
 
-# Set plotting style
-plt.style.use('default')
-sns.set_palette("husl")
+def ensure_vis_dir(subdir):
+    """Ensure visualization directory exists"""
+    vis_dir = Path("visualizations") / "processing_pipeline" / subdir
+    vis_dir.mkdir(parents=True, exist_ok=True)
+    return vis_dir
 
+def get_subject_id(filename):
+    """Extract subject ID from filename"""
+    # Handle augmented files: AUG_XXX_originalname.png
+    if filename.startswith('AUG_'):
+        # Extract original subject ID from augmented filename
+        parts = filename.split('_')
+        # Skip AUG and 3-letter ID, then reconstruct original subject ID
+        return '_'.join(parts[2:5])
+    else:
+        # Original format: extract subject ID (first 3 parts)
+        parts = filename.split('_')
+        return '_'.join(parts[:3])
 
-def visualize_split_qc(num_subjects_per_split=1):
-    """
-    Visualizes a few random subjects from each data split (train, val, test)
-    after the initial splitting step to ensure the temporal sequence is correct.
-    """
-    print("\n🔬 QC: Visualizing raw data from splits...")
-    input_root = config.STEP1_SPLIT_DIR
-    if not input_root.exists():
-        print(f"❌ Cannot run QC. Directory not found: {input_root}")
-        return
+def get_timepoint(filename):
+    """Extract timepoint from filename"""
+    # Handle both original and augmented filenames
+    if filename.startswith('AUG_'):
+        # AUG_XXX_002_S_0413_sc_coronal_y148.png
+        parts = filename.split('_')
+        return parts[5]  # timepoint is at position 5
+    else:
+        # 002_S_0413_sc_coronal_y148.png
+        parts = filename.split('_')
+        return parts[3]  # timepoint is at position 3
 
-    for split in ["train", "val", "test"]:
-        split_dir = input_root / split
-        if not split_dir.is_dir(): continue
+def print_final_data_distribution(logger):
+    """Print the final data distribution statistics"""
+    logger.info("\n📊 FINAL DATA DISTRIBUTION")
+    logger.info("=" * 80)
+
+    # Setup parameters
+    slice_types = ['axial', 'coronal', 'sagittal']
+    splits = ['train', 'val', 'test']
+    classes = ['AD', 'CN']
+    
+    # Use the correct balanced data directory path
+    balanced_dir = Path("../datasets/ADNI_1_5_T/9_balanced")
+    logger.info(f"Reading data from: {balanced_dir}")
+
+    for slice_type in slice_types:
+        logger.info(f"\n{slice_type.upper()} Plane:")
+        logger.info("-" * 40)
         
-        subjects = [d for d in split_dir.iterdir() if d.is_dir()]
-        if not subjects: continue
-
-        sample_subjects = random.sample(subjects, min(num_subjects_per_split, len(subjects)))
-
-        for subj_dir in sample_subjects:
-            nii_files = sorted(list(subj_dir.glob("*.nii")))
-            if not nii_files: continue
-
-            fig, axes = plt.subplots(1, len(nii_files), figsize=(5 * len(nii_files), 5))
-            if len(nii_files) == 1: axes = [axes]
+        for split in splits:
+            logger.info(f"\n{split.upper()} Split:")
+            total_images = 0
             
-            fig.suptitle(f'QC for Split: {split.upper()} | Subject: {subj_dir.name}', fontsize=16)
+            for class_name in classes:
+                class_path = balanced_dir / slice_type / split / class_name
+                if class_path.exists():
+                    # Count images
+                    images = list(class_path.glob('*.png'))
+                    
+                    # Separate original and augmented files
+                    original_files = []
+                    augmented_files = []
+                    
+                    for img in images:
+                        if img.name.startswith('AUG_'):
+                            augmented_files.append(img)
+                        else:
+                            original_files.append(img)
+                    
+                    # Count unique subjects from original files
+                    original_subjects = set()
+                    for img in original_files:
+                        subject_id = get_subject_id(img.name)
+                        original_subjects.add(subject_id)
+                    
+                    # Count augmented subjects (by their 3-letter ID)
+                    augmented_subjects = set()
+                    for img in augmented_files:
+                        aug_id = img.name.split('_')[1]  # Get the 3-letter ID
+                        augmented_subjects.add(aug_id)
+                    
+                    total_subjects = len(original_subjects) + len(augmented_subjects)
+                    total_images += len(images)
+                    
+                    logger.info(f"  {class_name}: {total_subjects} subjects "
+                              f"({len(original_subjects)} original + "
+                              f"{len(augmented_subjects)} augmented), {len(images)} images")
             
-            for ax, nii_path in zip(axes, nii_files):
-                try:
-                    data = nib.load(str(nii_path)).get_fdata()
-                    # Display a central coronal slice
-                    coronal_slice = data[:, data.shape[1] // 2, :]
-                    ax.imshow(np.rot90(coronal_slice), cmap='gray')
-                    ax.set_title(nii_path.name.split('_')[-1].split('.')[0].upper())
-                    ax.axis('off')
-                except Exception as e:
-                    ax.text(0.5, 0.5, 'Error loading', ha='center')
-                    print(f"Error loading {nii_path}: {e}")
+            logger.info(f"  Total: {total_images} images")
+
+def visualize_sample_data(logger):
+    """Visualize sample data for each plane and class"""
+    vis_dir = ensure_vis_dir("samples")
+    balanced_dir = Path("../datasets/ADNI_1_5_T/9_balanced")
+    cropped_dir = Path("../datasets/ADNI_1_5_T/7_cropped")  # Directory for pre-enhanced images
+    
+    # Setup parameters
+    slice_types = ['axial', 'coronal', 'sagittal']
+    classes = ['AD', 'CN']
+    visits = ['sc', 'm06', 'm12']
+    
+    for slice_type in slice_types:
+        for class_name in classes:
+            # Create figure for this plane and class
+            fig, axes = plt.subplots(3, 3, figsize=(15, 12))  # Changed to 3 rows
+            fig.suptitle(f'{class_name} - {slice_type.capitalize()} Plane', fontsize=16)
             
-            plt.tight_layout(rect=[0, 0, 1, 0.95])
-            plt.show()
+            # Get data directories
+            balanced_class_dir = balanced_dir / slice_type / 'train' / class_name
+            cropped_class_dir = cropped_dir / slice_type / 'train' / class_name
+            
+            if not (balanced_class_dir.exists() and cropped_class_dir.exists()):
+                continue
+            
+            # Get all original files from balanced directory
+            original_files = [f for f in balanced_class_dir.glob('*.png') if not f.name.startswith('AUG_')]
+            
+            # Group files by subject
+            subjects = defaultdict(list)
+            for f in original_files:
+                subject_id = get_subject_id(f.name)
+                subjects[subject_id].append(f)
+            
+            # Find subjects with all timepoints and augmented versions
+            complete_subjects = []
+            for sid, files in subjects.items():
+                # Check if subject has all timepoints
+                timepoints = set(get_timepoint(f.name) for f in files)
+                if len(timepoints) != len(visits):
+                    continue
+                
+                # Check if all timepoints have augmented versions
+                has_all_augmented = True
+                for f in files:
+                    aug_pattern = f"AUG_*_{get_subject_id(f.name)}_{get_timepoint(f.name)}_*.png"
+                    aug_files = list(balanced_class_dir.glob(aug_pattern))
+                    if not aug_files:
+                        has_all_augmented = False
+                        break
+                
+                # Check if all timepoints exist in cropped directory
+                has_all_cropped = True
+                for f in files:
+                    cropped_file = cropped_class_dir / f.name
+                    if not cropped_file.exists():
+                        has_all_cropped = False
+                        break
+                
+                if has_all_augmented and has_all_cropped:
+                    complete_subjects.append(sid)
+            
+            if not complete_subjects:
+                logger.warning(f"No complete subjects with all versions found for {class_name} - {slice_type}")
+                continue
+            
+            # Select a random complete subject
+            subject_id = random.choice(complete_subjects)
+            subject_files = subjects[subject_id]
+            
+            # Sort files by timepoint
+            subject_files.sort(key=lambda x: get_timepoint(x.name))
+            
+            # Find corresponding cropped and augmented files
+            cropped_files = []
+            augmented_files = []
+            for orig_file in subject_files:
+                # Get cropped file (pre-enhanced version)
+                cropped_file = cropped_class_dir / orig_file.name
+                cropped_files.append(cropped_file)
+                
+                # Find augmented version
+                aug_pattern = f"AUG_*_{get_subject_id(orig_file.name)}_{get_timepoint(orig_file.name)}_*.png"
+                aug_files = list(balanced_class_dir.glob(aug_pattern))
+                augmented_files.append(aug_files[0])  # We know it exists from our earlier check
+            
+            # Plot all versions of images
+            for col, (cropped_file, enhanced_file, aug_file, visit) in enumerate(zip(cropped_files, subject_files, augmented_files, visits)):
+                # Plot cropped (pre-enhanced)
+                img = cv2.imread(str(cropped_file), cv2.IMREAD_GRAYSCALE)
+                img = cv2.rotate(img, cv2.ROTATE_180)
+                axes[0, col].imshow(img, cmap='gray')
+                axes[0, col].set_title(f'Pre-enhanced - {visit}')
+                axes[0, col].axis('off')
+                
+                # Plot enhanced
+                img = cv2.imread(str(enhanced_file), cv2.IMREAD_GRAYSCALE)
+                img = cv2.rotate(img, cv2.ROTATE_180)
+                axes[1, col].imshow(img, cmap='gray')
+                axes[1, col].set_title(f'Enhanced - {visit}')
+                axes[1, col].axis('off')
+                
+                # Plot augmented
+                img = cv2.imread(str(aug_file), cv2.IMREAD_GRAYSCALE)
+                img = cv2.rotate(img, cv2.ROTATE_180)
+                axes[2, col].imshow(img, cmap='gray')
+                axes[2, col].set_title(f'Augmented - {visit}')
+                axes[2, col].axis('off')
+            
+            # Save the figure
+            plt.tight_layout()
+            save_path = vis_dir / f"sample_{class_name}_{slice_type}.png"
+            plt.savefig(save_path, dpi=150, bbox_inches='tight')
+            plt.close()
+            
+            logger.info(f"Saved sample visualization for {class_name} - {slice_type} to {save_path}")
 
-def visualize_enhancement_comparison(num_samples_per_class=2):
-    """
-    Compares original cropped images with their GWO-enhanced counterparts.
-    """
-    print("\n🔬 QC: Visualizing enhancement results...")
-    cropped_root = config.STEP7_CROPPED_DIR
-    enhanced_root = config.STEP8_ENHANCED_DIR
+def generate_qc_report(logger):
+    """Generate quality control report"""
+    logger.info("\n🔍 GENERATING QUALITY CONTROL REPORT")
+    logger.info("=" * 80)
 
-    if not cropped_root.exists() or not enhanced_root.exists():
-        print("❌ Cannot run enhancement QC. Input or output directories missing.")
-        return
-
-    samples = []
-    for cls in config.CLASSES_TO_INCLUDE:
-        # Use coronal training images for visualization
-        cropped_cls_dir = cropped_root / "coronal" / "train" / cls
-        enhanced_cls_dir = enhanced_root / "coronal" / "train" / cls
+    try:
+        # Print final data distribution
+        print_final_data_distribution(logger)
         
-        if cropped_cls_dir.exists():
-            cropped_files = list(cropped_cls_dir.glob("*.png"))
-            if not cropped_files: continue
+        # Visualize sample data
+        logger.info("\nGenerating sample visualizations...")
+        visualize_sample_data(logger)
 
-            chosen_files = random.sample(cropped_files, min(num_samples_per_class, len(cropped_files)))
-            for f in chosen_files:
-                enhanced_f = enhanced_cls_dir / f.name
-                if enhanced_f.exists():
-                    samples.append((f, enhanced_f, f"{cls} | {utils.extract_visit_from_filename(f.name)}"))
-    
-    if not samples:
-        print("No samples found for comparison.")
-        return
+        logger.info("\n✅ Quality control report generation complete!")
+        logger.info("📂 Visualizations saved in the 'visualizations/processing_pipeline/samples' directory")
 
-    fig, axes = plt.subplots(2, len(samples), figsize=(4 * len(samples), 8))
-    fig.suptitle('Enhancement Comparison (Original vs. Enhanced)', fontsize=16, weight='bold')
-
-    for i, (orig_p, en_p, label) in enumerate(samples):
-        orig_img = np.array(Image.open(orig_p))
-        en_img = np.array(Image.open(en_p))
-        
-        axes[0, i].imshow(orig_img, cmap='gray')
-        axes[0, i].set_title(f'Original\n{label}')
-        axes[0, i].axis('off')
-
-        axes[1, i].imshow(en_img, cmap='gray')
-        axes[1, i].set_title('Enhanced')
-        axes[1, i].axis('off')
-
-    plt.tight_layout()
-    plt.show()
-
-
-def visualize_augmentation_results():
-    """
-    Visualizes a comparison between original images and their augmented versions
-    to verify the data balancing step.
-    """
-    print("\n🔬 QC: Visualizing augmentation results...")
-    enhanced_root = config.STEP8_ENHANCED_DIR
-    balanced_root = config.STEP9_BALANCED_DIR
-
-    # Load augmentation log to find a source and its augmented version
-    log_path = balanced_root / 'augmentation_log.json'
-    if not log_path.exists():
-        print("❌ Augmentation log not found. Cannot visualize results.")
-        return
-    with open(log_path, 'r') as f:
-        aug_log = json.load(f)
-
-    # Find a sample to visualize
-    plane = 'coronal'
-    class_name = 'AD' # Typically, the minority class is augmented
-    if not aug_log[plane][class_name]['augmentation_params']:
-        print(f"No augmentation was performed for {class_name} in {plane} plane.")
-        return
-
-    # Get the first augmented subject from the log
-    first_aug_id = list(aug_log[plane][class_name]['augmentation_params'].keys())[0]
-    aug_info = aug_log[plane][class_name]['augmentation_params'][first_aug_id]
-    source_subject = aug_info['source']
-    
-    # Get the files for one timepoint (e.g., 'sc')
-    orig_file = next((enhanced_root / plane / 'train' / class_name).glob(f"{source_subject}_sc_*.png"), None)
-    aug_file = next((balanced_root / plane / 'train' / class_name).glob(f"AUG_{first_aug_id}_{source_subject}_sc_*.png"), None)
-
-    if not orig_file or not aug_file:
-        print("Could not find a matching original/augmented pair to visualize.")
-        return
-
-    orig_img = np.array(Image.open(orig_file))
-    aug_img = np.array(Image.open(aug_file))
-    diff = cv2.absdiff(orig_img, aug_img)
-
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    fig.suptitle(f'Augmentation Effect on Subject {source_subject}', fontsize=16)
-
-    axes[0].imshow(orig_img, cmap='gray'); axes[0].set_title('Original'); axes[0].axis('off')
-    axes[1].imshow(aug_img, cmap='gray'); axes[1].set_title('Augmented'); axes[1].axis('off')
-    im = axes[2].imshow(diff, cmap='hot'); axes[2].set_title('Difference Map'); axes[2].axis('off')
-    plt.colorbar(im, ax=axes[2])
-    plt.show()
-
-
-def generate_final_distribution_report():
-    """
-    Generates a comprehensive report and set of visualizations for the
-    final processed dataset, showing distributions by class, split, etc.
-    """
-    print("\n📊 Generating final dataset distribution report...")
-    if not config.STEP9_BALANCED_DIR.exists():
-        print("❌ Final dataset directory not found. Cannot generate report.")
-        return
-        
-    # This function can be expanded to create the detailed multi-plot
-    # visualization from the end of the notebook. For brevity, we'll
-    # create a simplified text report here.
-
-    all_data = []
-    for f in config.STEP9_BALANCED_DIR.rglob("*.png"):
-        parts = f.parts
-        # Expected structure: .../9_balanced/slice_type/split/class/file.png
-        if len(parts) >= 4:
-            all_data.append({
-                "slice_type": parts[-4],
-                "split": parts[-3],
-                "class": parts[-2],
-                "subject": utils.extract_subject_id_from_filename(f.name)
-            })
-    
-    if not all_data:
-        print("No files found in the final directory.")
-        return
-        
-    df = pd.DataFrame(all_data)
-
-    print("\n--- Final Dataset Composition ---")
-    print(df.groupby(['split', 'class', 'slice_type']).size().unstack(fill_value=0))
-    
-    print("\n--- Unique Subjects per Split/Class (Across all slice types) ---")
-    print(df.groupby(['split', 'class'])['subject'].nunique().unstack(fill_value=0))
-    
-    print("\n✅ Report generation complete.")
-
+    except Exception as e:
+        logger.error(f"❌ Error generating QC report: {str(e)}")
+        raise
 
 if __name__ == '__main__':
-    # You can call these functions to test them individually
-    visualize_split_qc()
-    visualize_enhancement_comparison()
-    visualize_augmentation_results()
-    generate_final_distribution_report()
+    # Setup basic logger for standalone execution
+    main_logger = logging.getLogger(__name__)
+    if not main_logger.handlers:
+        main_logger.addHandler(logging.StreamHandler())
+        main_logger.setLevel(logging.INFO)
+    
+    # Generate QC report
+    generate_qc_report(main_logger)

@@ -1,0 +1,14 @@
+2025-06-26 22:30:19 - pipeline_enhance - INFO - Starting enhance step
+2025-06-26 22:30:19 - pipeline_enhance - INFO - 
+🧠 STEP 8: GWO IMAGE ENHANCEMENT
+2025-06-26 22:30:19 - pipeline_enhance - INFO - ================================================================================
+2025-06-26 22:30:19 - pipeline_enhance - INFO - 🔍 Found 2889 images to enhance using 'adaptive' method.
+2025-06-27 03:26:08 - pipeline_enhance - INFO - 
+================================================================================
+2025-06-27 03:26:08 - pipeline_enhance - INFO - ✅ ENHANCEMENT COMPLETE
+2025-06-27 03:26:08 - pipeline_enhance - INFO - ================================================================================
+2025-06-27 03:26:08 - pipeline_enhance - INFO -   - Successfully processed: 2889
+2025-06-27 03:26:08 - pipeline_enhance - INFO -   - Skipped (already exist): 0
+2025-06-27 03:26:08 - pipeline_enhance - INFO -   - Files with errors: 0
+2025-06-27 03:26:08 - pipeline_enhance - INFO -   - Output located at: ../datasets/ADNI_1_5_T/8_enhanced
+2025-06-27 03:26:08 - pipeline_enhance - INFO - Image enhancement completed

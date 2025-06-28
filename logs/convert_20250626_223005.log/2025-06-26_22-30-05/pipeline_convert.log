@@ -1,0 +1,60 @@
+2025-06-26 22:30:05 - pipeline_convert - INFO - Starting convert step
+2025-06-26 22:30:05 - pipeline_convert - INFO - 
+🧠 STEP 5: ORGANIZING AND LABELING 2D SLICES (TEMPORAL - STRICT)
+2025-06-26 22:30:05 - pipeline_convert - INFO - ================================================================================
+2025-06-26 22:30:05 - pipeline_convert - INFO - ✅ Loaded metadata for 638 subjects.
+2025-06-26 22:30:05 - pipeline_convert - INFO - ✅ Ensured output directory exists: ../datasets/ADNI_1_5_T/5_labelling_sequential_variable
+2025-06-26 22:30:05 - pipeline_convert - INFO - 
+================================================================================
+2025-06-26 22:30:05 - pipeline_convert - INFO - PROCESSING AXIAL SLICES
+2025-06-26 22:30:05 - pipeline_convert - INFO - ================================================================================
+2025-06-26 22:30:05 - pipeline_convert - INFO - 🔍 Found 1863 files across 621 unique subjects.
+2025-06-26 22:30:05 - pipeline_convert - INFO - 
+📊 AXIAL Organization Summary:
+2025-06-26 22:30:05 - pipeline_convert - INFO -   - Subjects with complete sequences processed: 321
+2025-06-26 22:30:05 - pipeline_convert - INFO -   - Subjects with incomplete sequences skipped: 0
+2025-06-26 22:30:05 - pipeline_convert - INFO -   - Subjects with missing metadata skipped: 0
+2025-06-26 22:30:05 - pipeline_convert - INFO -   - Total files organized for axial: 963
+2025-06-26 22:30:05 - pipeline_convert - INFO - 
+================================================================================
+2025-06-26 22:30:05 - pipeline_convert - INFO - PROCESSING CORONAL SLICES
+2025-06-26 22:30:05 - pipeline_convert - INFO - ================================================================================
+2025-06-26 22:30:06 - pipeline_convert - INFO - 🔍 Found 1863 files across 621 unique subjects.
+2025-06-26 22:30:06 - pipeline_convert - INFO - 
+📊 CORONAL Organization Summary:
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Subjects with complete sequences processed: 321
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Subjects with incomplete sequences skipped: 0
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Subjects with missing metadata skipped: 0
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Total files organized for coronal: 963
+2025-06-26 22:30:06 - pipeline_convert - INFO - 
+================================================================================
+2025-06-26 22:30:06 - pipeline_convert - INFO - PROCESSING SAGITTAL SLICES
+2025-06-26 22:30:06 - pipeline_convert - INFO - ================================================================================
+2025-06-26 22:30:06 - pipeline_convert - INFO - 🔍 Found 1863 files across 621 unique subjects.
+2025-06-26 22:30:06 - pipeline_convert - INFO - 
+📊 SAGITTAL Organization Summary:
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Subjects with complete sequences processed: 321
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Subjects with incomplete sequences skipped: 0
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Subjects with missing metadata skipped: 0
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Total files organized for sagittal: 963
+2025-06-26 22:30:06 - pipeline_convert - INFO - 
+================================================================================
+2025-06-26 22:30:06 - pipeline_convert - INFO - ✅ OVERALL ORGANIZATION SUMMARY
+2025-06-26 22:30:06 - pipeline_convert - INFO - ================================================================================
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Grand total of files organized across all types: 2889
+2025-06-26 22:30:06 - pipeline_convert - INFO -   - Final output is ready for 2D conversion at: ../datasets/ADNI_1_5_T/5_labelling_sequential_variable
+2025-06-26 22:30:06 - pipeline_convert - INFO - 
+🧠 STEP 6: CONVERTING NIFTI SLICES TO PNG
+2025-06-26 22:30:06 - pipeline_convert - INFO - ================================================================================
+2025-06-26 22:30:06 - pipeline_convert - INFO - 🔍 Found 2889 NIfTI files to convert.
+2025-06-26 22:30:13 - pipeline_convert - INFO - 
+================================================================================
+2025-06-26 22:30:13 - pipeline_convert - INFO - ✅ 2D CONVERSION COMPLETE
+2025-06-26 22:30:13 - pipeline_convert - INFO - ================================================================================
+2025-06-26 22:30:13 - pipeline_convert - INFO -   - Files converted successfully: 2889
+2025-06-26 22:30:13 - pipeline_convert - INFO -   - Files skipped (already exist): 0
+2025-06-26 22:30:13 - pipeline_convert - INFO -   - Files with errors: 0
+2025-06-26 22:30:13 - pipeline_convert - INFO -   - Original image sizes found: ['192x160', '192x176', '192x192', '256x146', '256x150', '256x160', '256x161', '256x162', '256x166', '256x170', '256x180', '256x184', '256x256']
+2025-06-26 22:30:13 - pipeline_convert - INFO -   - All images resized to: 256x256
+2025-06-26 22:30:13 - pipeline_convert - INFO -   - Output located at: ../datasets/ADNI_1_5_T/6_2Dconverted_sequential
+2025-06-26 22:30:13 - pipeline_convert - INFO - Image conversion completed

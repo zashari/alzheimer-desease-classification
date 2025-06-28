@@ -1,0 +1,75 @@
+2025-06-28 16:47:58 - pipeline_qc - INFO - Starting qc step
+2025-06-28 16:47:58 - pipeline_qc - INFO - Starting quality control visualization
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+🔍 GENERATING QUALITY CONTROL REPORT
+2025-06-28 16:47:58 - pipeline_qc - INFO - ================================================================================
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+📊 FINAL DATA DISTRIBUTION
+2025-06-28 16:47:58 - pipeline_qc - INFO - ================================================================================
+2025-06-28 16:47:58 - pipeline_qc - INFO - Reading data from: ../datasets/ADNI_1_5_T/9_balanced
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+AXIAL Plane:
+2025-06-28 16:47:58 - pipeline_qc - INFO - ----------------------------------------
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+TRAIN Split:
+2025-06-28 16:47:58 - pipeline_qc - INFO -   AD: 180 subjects (91 original + 89 augmented), 540 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   CN: 180 subjects (134 original + 46 augmented), 540 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   Total: 1080 images
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+VAL Split:
+2025-06-28 16:47:58 - pipeline_qc - INFO -   AD: 19 subjects (19 original + 0 augmented), 57 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   CN: 29 subjects (29 original + 0 augmented), 87 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   Total: 144 images
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+TEST Split:
+2025-06-28 16:47:58 - pipeline_qc - INFO -   AD: 20 subjects (20 original + 0 augmented), 60 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   CN: 28 subjects (28 original + 0 augmented), 84 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   Total: 144 images
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+CORONAL Plane:
+2025-06-28 16:47:58 - pipeline_qc - INFO - ----------------------------------------
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+TRAIN Split:
+2025-06-28 16:47:58 - pipeline_qc - INFO -   AD: 180 subjects (91 original + 89 augmented), 540 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   CN: 180 subjects (134 original + 46 augmented), 540 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   Total: 1080 images
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+VAL Split:
+2025-06-28 16:47:58 - pipeline_qc - INFO -   AD: 19 subjects (19 original + 0 augmented), 57 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   CN: 29 subjects (29 original + 0 augmented), 87 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   Total: 144 images
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+TEST Split:
+2025-06-28 16:47:58 - pipeline_qc - INFO -   AD: 20 subjects (20 original + 0 augmented), 60 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   CN: 28 subjects (28 original + 0 augmented), 84 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   Total: 144 images
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+SAGITTAL Plane:
+2025-06-28 16:47:58 - pipeline_qc - INFO - ----------------------------------------
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+TRAIN Split:
+2025-06-28 16:47:58 - pipeline_qc - INFO -   AD: 180 subjects (91 original + 89 augmented), 540 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   CN: 180 subjects (134 original + 46 augmented), 540 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   Total: 1080 images
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+VAL Split:
+2025-06-28 16:47:58 - pipeline_qc - INFO -   AD: 19 subjects (19 original + 0 augmented), 57 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   CN: 29 subjects (29 original + 0 augmented), 87 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   Total: 144 images
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+TEST Split:
+2025-06-28 16:47:58 - pipeline_qc - INFO -   AD: 20 subjects (20 original + 0 augmented), 60 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   CN: 28 subjects (28 original + 0 augmented), 84 images
+2025-06-28 16:47:58 - pipeline_qc - INFO -   Total: 144 images
+2025-06-28 16:47:58 - pipeline_qc - INFO - 
+Generating sample visualizations...
+2025-06-28 16:47:59 - pipeline_qc - INFO - Saved sample visualization for AD - axial to visualizations/processing_pipeline/samples/sample_AD_axial.png
+2025-06-28 16:48:00 - pipeline_qc - INFO - Saved sample visualization for CN - axial to visualizations/processing_pipeline/samples/sample_CN_axial.png
+2025-06-28 16:48:01 - pipeline_qc - INFO - Saved sample visualization for AD - coronal to visualizations/processing_pipeline/samples/sample_AD_coronal.png
+2025-06-28 16:48:01 - pipeline_qc - INFO - Saved sample visualization for CN - coronal to visualizations/processing_pipeline/samples/sample_CN_coronal.png
+2025-06-28 16:48:02 - pipeline_qc - INFO - Saved sample visualization for AD - sagittal to visualizations/processing_pipeline/samples/sample_AD_sagittal.png
+2025-06-28 16:48:02 - pipeline_qc - INFO - Saved sample visualization for CN - sagittal to visualizations/processing_pipeline/samples/sample_CN_sagittal.png
+2025-06-28 16:48:02 - pipeline_qc - INFO - 
+✅ Quality control report generation complete!
+2025-06-28 16:48:02 - pipeline_qc - INFO - 📂 Visualizations saved in the 'visualizations/processing_pipeline/samples' directory
+2025-06-28 16:48:02 - pipeline_qc - INFO - Quality control visualization completed

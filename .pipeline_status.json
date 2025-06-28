@@ -1,0 +1,9 @@
+{
+  "split": true,
+  "nifti": true,
+  "convert": true,
+  "crop": true,
+  "enhance": true,
+  "balance": true,
+  "qc": true
+}

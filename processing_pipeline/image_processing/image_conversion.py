@@ -1,92 +1,113 @@
 # =====================================================================
 # ADNI MRI PROCESSING PIPELINE - STEP 6: 2D IMAGE CONVERSION
 # =====================================================================
-# This script converts the 2D NIfTI slices into PNG format.
-# It performs normalization and resizing to prepare the images for
-# deep learning models.
+# This script converts the 2D NIfTI slices from the previous step
+# into a standard image format (PNG) for easier visualization and
+# use in deep learning frameworks.
 
 from pathlib import Path
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
-import nibabel as nib
 import numpy as np
+import nibabel as nib
 from PIL import Image
 from tqdm import tqdm
 
 from configs import config
 from utils import utils
 
-def _convert_slice_to_png(task: tuple):
-    """Worker function to convert a single NIfTI slice to a PNG file."""
-    nii_path, out_path = task
-    try:
-        # Load the NIfTI file (already a single 2D slice)
-        slice_img = nib.load(str(nii_path))
-        slice_data = np.squeeze(slice_img.get_fdata())
-
-        # Normalize slice intensity to 0-255 range
-        slice_normalized = utils.normalize_to_uint8(slice_data, config.INTENSITY_NORM_PERCENTILE)
-
-        # Convert to PIL Image (transpose for correct orientation)
-        img = Image.fromarray(slice_normalized.T, mode='L')
-        
-        # Resize to target resolution
-        img_resized = utils.resize_image(img, config.TARGET_2D_SIZE, config.PNG_INTERPOLATION)
-
-        # Save the final PNG file
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        img_resized.save(out_path)
-        
-        return "success"
-    except Exception as e:
-        return f"error: {e}"
-
-def convert_nifti_to_png():
+def convert_nifti_to_png(logger):
     """
-    Finds all 2D NIfTI slices from the labeling step and converts them
-    to PNG format in parallel.
+    Converts organized 2D NIfTI slices into PNG format.
+
+    This function iterates through all labeled NIfTI files, performs
+    intensity normalization and resizing, and saves them as PNG images,
+    maintaining the same directory structure.
+
+    Args:
+        logger: A configured logger instance for output.
     """
-    print("\n🧠 STEP 6: 2D NIFTI SLICE TO PNG CONVERSION")
-    print("=" * 60)
-
-    # Define input directories for each slice type
-    slice_type_dirs = {
-        "axial": config.STEP4_SLICES_AXIAL_DIR,
-        "coronal": config.STEP4_SLICES_CORONAL_DIR,
-        "sagittal": config.STEP4_SLICES_SAGITTAL_DIR,
-    }
-
-    # Gather all NIfTI files to be processed
-    tasks = []
-    for slice_type, slice_dir in slice_type_dirs.items():
-        if not slice_dir.exists():
-            print(f"⚠️ Warning: Input directory for {slice_type} not found at {slice_dir}")
-            continue
-        
-        for nii_path in slice_dir.rglob("*.nii.gz"):
-            # Construct the output path mirroring the input structure but under STEP6_2D_CONVERTED_DIR
-            relative_path = nii_path.relative_to(slice_dir)
-            out_path = config.STEP6_2D_CONVERTED_DIR / slice_type / relative_path.with_suffix(".png")
-            tasks.append((nii_path, out_path))
-
-    if not tasks:
-        print("❌ No NIfTI slice files found to convert. Aborting.")
-        return
-
-    print(f"🔍 Found {len(tasks)} NIfTI slices to convert to PNG.")
-    print(f"🚀 Starting conversion with {config.MAX_THREADS} parallel threads...")
+    logger.info("\n🧠 STEP 6: CONVERTING NIFTI SLICES TO PNG")
+    logger.info("=" * 80)
     
-    stats = defaultdict(int)
-    with ThreadPoolExecutor(max_workers=config.MAX_THREADS) as exe:
-        futures = {exe.submit(_convert_slice_to_png, t): t for t in tasks}
-        for fut in tqdm(as_completed(futures), total=len(tasks), desc="Converting to PNG"):
-            stats[fut.result()] += 1
+    input_root = config.STEP5_LABELED_DIR
+    output_root = config.STEP6_2D_CONVERTED_DIR
+    
+    if not input_root.exists():
+        logger.error(f"❌ Input directory not found: {input_root}. Aborting.")
+        return
+        
+    # --- Gather all input NIfTI files ---
+    nifti_paths = list(input_root.rglob("*.nii.gz"))
+    if not nifti_paths:
+        logger.error(f"❌ No NIfTI files found in {input_root} to process.")
+        return
+        
+    logger.info(f"🔍 Found {len(nifti_paths)} NIfTI files to convert.")
+    
+    # --- Process Images ---
+    processed_count = 0
+    skipped_count = 0
+    error_count = 0
+    original_sizes = set()
 
-    print("\n📋 2D Conversion Summary:")
-    for k, v in stats.items():
-        print(f"  - {k.capitalize()}: {v}")
-    print(f"\n✅ Step 6: 2D conversion complete! Output at {config.STEP6_2D_CONVERTED_DIR}")
+    for in_path in tqdm(nifti_paths, desc="Converting NIfTI to PNG"):
+        try:
+            # Mirror the directory structure for the output
+            rel_path = in_path.relative_to(input_root)
+            out_path = (output_root / rel_path).with_suffix(".png")
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+
+            if out_path.exists():
+                skipped_count += 1
+                continue
+
+            # Load the NIfTI slice
+            slice_nifti = nib.load(str(in_path))
+            slice_data = slice_nifti.get_fdata()
+            
+            # Squeeze data to remove singleton dimensions -> 2D
+            slice_2d = np.squeeze(slice_data)
+
+            # Normalize slice intensity to 0-255 range
+            slice_normalized = utils.normalize_to_uint8(
+                slice_2d,
+                config.INTENSITY_NORM_PERCENTILE
+            )
+
+            # Convert to PIL Image (transpose for correct orientation)
+            img = Image.fromarray(slice_normalized.T, mode='L')
+            
+            original_sizes.add(f"{img.width}x{img.height}")
+            
+            # Resize to target resolution using high-quality interpolation
+            img_resized = utils.resize_image(
+                img,
+                config.TARGET_2D_SIZE,
+                config.PNG_INTERPOLATION
+            )
+            
+            # Save the final PNG image
+            img_resized.save(out_path)
+            processed_count += 1
+            
+        except Exception as e:
+            logger.error(f"Failed to process {in_path}: {e}")
+            error_count += 1
+
+    # --- Final Report ---
+    logger.info("\n" + "="*80)
+    logger.info("✅ 2D CONVERSION COMPLETE")
+    logger.info("="*80)
+    logger.info(f"  - Files converted successfully: {processed_count}")
+    logger.info(f"  - Files skipped (already exist): {skipped_count}")
+    logger.info(f"  - Files with errors: {error_count}")
+    logger.info(f"  - Original image sizes found: {sorted(list(original_sizes))}")
+    logger.info(f"  - All images resized to: {config.TARGET_2D_SIZE[0]}x{config.TARGET_2D_SIZE[1]}")
+    logger.info(f"  - Output located at: {output_root}")
 
 if __name__ == '__main__':
-    convert_nifti_to_png()
+    from utils.logging_utils import setup_logging
+    
+    main_logger = setup_logging("image_conversion_standalone", config.LOG_DIR)
+    convert_nifti_to_png(logger=main_logger)

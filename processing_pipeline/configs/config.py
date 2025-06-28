@@ -13,8 +13,11 @@ from PIL import Image
 
 # --- Input Paths ---
 # Assumes a base project directory containing the 'datasets' folder
-PROJECT_ROOT = Path("../../")
-BASE_DATA_DIR = PROJECT_ROOT / "datasets" / "ADNI_1_5_T"
+PROJECT_ROOT = Path(".")
+BASE_DATA_DIR = Path("../datasets/ADNI_1_5_T")  # Keep this path relative to parent
+
+# --- Visualization Output Path ---
+VISUALIZATION_DIR = PROJECT_ROOT / "visualizations" / "processing_pipeline"
 
 # Raw ADNI data directory (where original .nii files are)
 RAW_NIFTI_DIR = BASE_DATA_DIR / ".ADNI"
@@ -34,6 +37,9 @@ MNI_BRAIN_TEMPLATE = FSL_DATA_DIR / "standard" / "MNI152_T1_1mm_brain.nii.gz"
 # Hippocampal ROI template path
 ROI_TEMPLATE = PROJECT_ROOT / "hippocampal-ROI" / "HarvardOxford-sub-maxprob-thr25-1mm.nii.gz"
 
+# --- Data Organization ---
+SLICE_TYPES = ["axial", "coronal", "sagittal"]
+SPLITS = ["train", "val", "test"]
 
 # --- Output Paths for Each Pipeline Step ---
 # Each step's output serves as the input for the next.
@@ -107,3 +113,6 @@ AUGMENTATION_TARGETS = {
     # 'MCI': 209,  # No augmentation if target is same as original
     'CN': 180
 }
+
+# Logging configuration
+LOG_DIR = Path("logs")

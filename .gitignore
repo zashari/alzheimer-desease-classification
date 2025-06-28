@@ -50,3 +50,6 @@ ENV/
 .vscode/
 *.swp
 *.swo 
+
+# Cursor Rules
+.cursor/
