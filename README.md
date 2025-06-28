@@ -2,7 +2,7 @@
 
 A comprehensive Python pipeline for processing Alzheimer's Disease Neuroimaging Initiative (ADNI) MRI data, designed to support both temporal sequence analysis and single timepoint studies. This pipeline handles the complete workflow from raw DICOM data to enhanced, balanced datasets ready for deep learning applications.
 
-## 🧠 Overview
+## Overview
 
 This pipeline processes longitudinal MRI data from ADNI subjects with maximum flexibility:
 - **Dual-purpose design**: Supports both temporal (multi-timepoint) and non-temporal (single timepoint) model development
@@ -12,7 +12,7 @@ This pipeline processes longitudinal MRI data from ADNI subjects with maximum fl
 - **Advanced enhancement**: Grey Wolf Optimizer (GWO) based image enhancement
 - **Smart augmentation**: Temporally consistent data augmentation for class balancing
 
-## 🎯 Key Feature: Temporal & Non-Temporal Support
+## Key Feature: Temporal & Non-Temporal Support
 
 This pipeline is uniquely designed to support both research approaches:
 
@@ -28,7 +28,7 @@ This pipeline is uniquely designed to support both research approaches:
 
 The pipeline processes ALL data comprehensively, giving you the flexibility to choose your approach after processing is complete!
 
-## 📋 Prerequisites
+## Prerequisites
 
 - **Python 3.8+**
 - **FSL (FMRIB Software Library)** - Required for skull stripping and registration
@@ -36,7 +36,7 @@ The pipeline processes ALL data comprehensively, giving you the flexibility to c
   - Ensure `bet` and `flirt` commands are accessible
 - **ADNI Dataset** - 1.5T MRI scans with metadata CSV
 
-## 🚀 Installation
+## Installation
 
 1. Clone the repository:
 ```bash
@@ -61,7 +61,7 @@ FSL_DIR = Path("/path/to/your/fsl")
 FSL_BIN_DIR = FSL_DIR / "bin"
 ```
 
-## 🔧 Configuration
+## Configuration
 
 Edit `processing_pipeline/configs/config.py` to set:
 
@@ -73,7 +73,7 @@ Edit `processing_pipeline/configs/config.py` to set:
   - Enhancement parameters
 - **Computational resources**: `MAX_THREADS` for parallel processing
 
-## 📊 Pipeline Steps
+## Pipeline Steps
 
 The pipeline consists of 9 sequential steps:
 
@@ -127,7 +127,7 @@ The pipeline consists of 9 sequential steps:
 - Shows sample images across processing stages
 - Provides distribution statistics
 
-## 💻 Usage
+## Usage
 
 ### Run the complete pipeline:
 ```bash
@@ -163,7 +163,7 @@ python processing_pipeline/main_pipeline.py --step qc
 python processing_pipeline/main_pipeline.py --step enhance --force
 ```
 
-## 📁 Output Structure
+## Output Structure
 
 The pipeline produces a complete, organized output with three separate directories for each anatomical plane:
 
@@ -192,7 +192,7 @@ datasets/ADNI_1_5_T/
         └── test/
 ```
 
-## 🔄 Flexible Data Usage
+## Flexible Data Usage
 
 After pipeline completion, you have maximum flexibility:
 
@@ -218,18 +218,18 @@ coronal_data = "datasets/ADNI_1_5_T/9_balanced/coronal/"
 sagittal_data = "datasets/ADNI_1_5_T/9_balanced/sagittal/"
 ```
 
-## 📈 Pipeline Status
+## Pipeline Status
 
 The pipeline tracks completion status in `.pipeline_status.json`. Steps are automatically skipped if already completed unless `--force` is used.
 
-## 🔍 Logging
+## Logging
 
 Detailed logs are saved in `logs/` directory with timestamps:
 - Each step creates its own log file
 - Progress bars show real-time status
 - Comprehensive error reporting
 
-## ⚠️ Important Notes
+## Important Notes
 
 - **Memory Requirements**: ~16GB RAM recommended for parallel processing
 - **Storage**: Ensure sufficient disk space (~50GB for full pipeline)
@@ -237,9 +237,9 @@ Detailed logs are saved in `logs/` directory with timestamps:
 - **Data Integrity**: Pipeline strictly enforces temporal consistency - subjects missing any timepoint are excluded
 - **Flexibility**: Although the pipeline ensures temporal consistency, the output supports both temporal and non-temporal usage
 
-## 🚧 Training Pipeline
+## Training Pipeline
 
-**Note: The training pipeline is currently under development! 🚀**
+**Note: The training pipeline is currently under development!**
 
 The `training_pipeline/` directory will contain:
 - Multi-modal CNN architectures
@@ -251,7 +251,7 @@ The `training_pipeline/` directory will contain:
 
 Stay tuned for updates!
 
-## 📊 Sample Results
+## Sample Results
 
 After running the pipeline, you'll have:
 - Balanced dataset with 180 subjects per class (AD/CN) in training
@@ -264,7 +264,7 @@ After running the pipeline, you'll have:
 - Consistent preprocessing across all images
 - Quality control visualizations in `visualizations/`
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please:
 1. Fork the repository
@@ -273,18 +273,18 @@ Contributions are welcome! Please:
 4. Push to the branch
 5. Create a Pull Request
 
-## 📝 Citation
+## Citation
 
 If you use this pipeline in your research, please cite:
 ```
 [Your citation information here]
 ```
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - ADNI (Alzheimer's Disease Neuroimaging Initiative) for providing the dataset
 - FSL developers for neuroimaging tools
