@@ -53,3 +53,7 @@ ENV/
 
 # Cursor Rules
 .cursor/
+
+# Data Viewer
+data-viewer/dist/
+data-viewer/node_modules/

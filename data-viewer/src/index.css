@@ -1,0 +1,28 @@
+:root {
+  --primary-color: #00D9FF;
+  --secondary-gradient: linear-gradient(to right, #8B5CF6, #EC4899);
+  --neutral-dark: #1F1F23;
+  --neutral-light: #2A2A2E;
+  --accent-white: #F0F0F0;
+  --success-glow: #10B981;
+  --warning-glow: #F59E0B;
+  --deep-space: #0A0A0B;
+  --midnight-blue: #1A1A2E;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(180deg, var(--deep-space) 0%, var(--midnight-blue) 100%);
+  color: var(--accent-white);
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
