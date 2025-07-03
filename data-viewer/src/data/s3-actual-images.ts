@@ -1,7 +1,7 @@
 // Auto-generated list of actual S3 images
 // Generated on: 2025-06-30T06:45:47.247Z
 
-export const S3_BUCKET_URL = 'https://ad-public-storage-data-viewer-ap-southeast-1-836322468413.s3.ap-southeast-1.amazonaws.com';
+export const S3_BUCKET_URL = 'https://<your-bucket-name>.s3.ap-southeast-1.amazonaws.com';
 
 // Actual image paths from S3
 export const S3_IMAGE_PATHS = [

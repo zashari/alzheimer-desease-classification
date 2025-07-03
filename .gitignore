@@ -57,3 +57,4 @@ ENV/
 # Data Viewer
 data-viewer/dist/
 data-viewer/node_modules/
+data-viewer/cloudfront-config.json

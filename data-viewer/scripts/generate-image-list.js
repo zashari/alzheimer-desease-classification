@@ -12,7 +12,7 @@ const s3ImagesPath = '/tmp/s3-images.txt';
 const outputPath = path.join(__dirname, '..', 'src', 'data', 's3-actual-images.ts');
 
 if (!fs.existsSync(s3ImagesPath)) {
-  console.error('Please run: aws s3 ls s3://ad-public-storage-data-viewer-ap-southeast-1-836322468413/assets/images/ --recursive | grep "\\.png$" | awk \'{print $4}\' > /tmp/s3-images.txt');
+  console.error('Please run: aws s3 ls s3://<your-bucket-name>/assets/images/ --recursive | grep "\\.png$" | awk \'{print $4}\' > /tmp/s3-images.txt');
   process.exit(1);
 }
 

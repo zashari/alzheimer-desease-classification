@@ -5,8 +5,8 @@
 
 set -e
 
-DISTRIBUTION_ID="EN2U5K6XUPERH"
-ORIGIN_REGION="ap-southeast-1"
+DISTRIBUTION_ID="<your-distribution-id>"
+ORIGIN_REGION="<your-origin-region>"
 
 echo "🚀 Optimizing CloudFront distribution: $DISTRIBUTION_ID"
 

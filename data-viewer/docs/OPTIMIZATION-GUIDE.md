@@ -126,7 +126,7 @@ curl -H "Accept-Encoding: gzip" https://d2iiwoaj8v8tqz.cloudfront.net/test.png -
 
 ### 3. Cache Headers Test:
 ```bash
-curl -I https://d2iiwoaj8v8tqz.cloudfront.net/test.png
+curl -I https://<your-cloudfront-domain>/test.png
 # Should see: Cache-Control: public, max-age=31536000
 ```
 

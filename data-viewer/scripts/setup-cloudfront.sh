@@ -3,8 +3,8 @@
 # CloudFront setup script for S3 bucket
 # This script creates a CloudFront distribution for faster image delivery
 
-BUCKET_NAME="ad-public-storage-data-viewer-ap-southeast-1-836322468413"
-REGION="ap-southeast-1"
+BUCKET_NAME="<your-bucket-name>"
+REGION="<your-region>"
 DISTRIBUTION_COMMENT="AD Medical Images CDN"
 ORIGIN_ID="S3-${BUCKET_NAME}"
 

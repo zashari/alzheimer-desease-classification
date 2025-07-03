@@ -5,7 +5,7 @@
 
 set -e
 
-BUCKET_NAME="ad-public-storage-data-viewer-ap-southeast-1-836322468413"
+BUCKET_NAME="<your-bucket-name>"
 LOCAL_DIR="temp-compress"
 OUTPUT_DIR="optimized-images"
 

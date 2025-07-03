@@ -25,9 +25,9 @@ RAW_NIFTI_DIR = BASE_DATA_DIR / ".ADNI"
 # Metadata CSV file from ADNI
 METADATA_CSV = BASE_DATA_DIR / "ADNI1_Complete_1Yr_1.5T_3_21_2025.csv"
 
-# --- FSL (FMRIB Software Library) Paths ---
-# Adjust these paths to match your FSL installation
-FSL_DIR = Path("/Users/AndiZakyAshari/fsl")
+# FSL (FMRIB Software Library) Paths
+# Adjust these paths to match your FSL installation. It is recommended to set the FSLDIR environment variable.
+FSL_DIR = Path(os.environ.get("FSLDIR", "/usr/local/fsl"))
 FSL_BIN_DIR = FSL_DIR / "bin"
 FSL_DATA_DIR = FSL_DIR / "data"
 

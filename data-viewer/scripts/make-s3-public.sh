@@ -2,7 +2,7 @@
 
 # Script to make S3 bucket objects publicly readable
 
-BUCKET_NAME="ad-public-storage-data-viewer-ap-southeast-1-836322468413"
+BUCKET_NAME="<your-bucket-name>"
 
 echo "Making S3 bucket objects publicly accessible..."
 

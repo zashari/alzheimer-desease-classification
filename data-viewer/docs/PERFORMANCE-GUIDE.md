@@ -56,10 +56,10 @@ Update `.env` file:
 
 ```bash
 # For S3 direct (Singapore optimized):
-VITE_IMAGE_BASE_URL=https://ad-public-storage-data-viewer-ap-southeast-1-836322468413.s3.ap-southeast-1.amazonaws.com
+VITE_IMAGE_BASE_URL=https://<your-bucket-name>.s3.<your-region>.amazonaws.com
 
 # For CloudFront (Global optimized):
-VITE_IMAGE_BASE_URL=https://d2iiwoaj8v8tqz.cloudfront.net
+VITE_IMAGE_BASE_URL=https://<your-cloudfront-domain>
 ```
 
 ## Performance Tips

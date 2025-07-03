@@ -5,7 +5,7 @@
 
 set -e
 
-BUCKET_NAME="ad-public-storage-data-viewer-ap-southeast-1-836322468413"
+BUCKET_NAME="<your-bucket-name>"
 LOCAL_DIR="temp-images"
 WEBP_DIR="webp-images"
 

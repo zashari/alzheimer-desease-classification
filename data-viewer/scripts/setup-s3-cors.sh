@@ -2,7 +2,7 @@
 
 # Script to configure CORS on S3 bucket for web access
 
-BUCKET_NAME="ad-public-storage-data-viewer-ap-southeast-1-836322468413"
+BUCKET_NAME="<your-bucket-name>"
 
 echo "Setting up CORS configuration for bucket: ${BUCKET_NAME}"
 

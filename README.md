@@ -47,12 +47,12 @@ The `data-viewer` directory contains a React application built with Vite and Thr
 
 ## ☁️ Cloud Infrastructure
 
-The data viewer leverages AWS S3 and CloudFront for efficient and scalable image hosting.
+The data viewer is configured to leverage AWS S3 and CloudFront for efficient and scalable image hosting. You will need to set up your own bucket and distribution.
 
--   **S3 Bucket**: `ad-public-storage-data-viewer-ap-southeast-1-836322468413`
--   **CloudFront Domain**: `d2iiwoaj8v8tqz.cloudfront.net`
+-   **S3 Bucket**: Set this up to host your image data.
+-   **CloudFront Domain**: Connect this to your S3 bucket for CDN delivery.
 
-Scripts for managing the cloud infrastructure are available in the `data-viewer/scripts` directory.
+Scripts to help you manage the cloud infrastructure are available in the `data-viewer/scripts` directory. You will need to update the placeholder values in these scripts with your own resource names.
 
 ## 🤝 Contributing
 

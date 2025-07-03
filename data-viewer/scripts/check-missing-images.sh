@@ -4,8 +4,8 @@
 
 set -e
 
-BUCKET_NAME="ad-public-storage-data-viewer-ap-southeast-1-836322468413"
-CLOUDFRONT_URL="https://d2iiwoaj8v8tqz.cloudfront.net"
+BUCKET_NAME="<your-bucket-name>"
+CLOUDFRONT_URL="https://<your-cloudfront-domain>"
 
 echo "🔍 Checking for missing images..."
 

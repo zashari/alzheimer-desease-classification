@@ -47,7 +47,7 @@ Set the image base URL in `.env`:
 
 ```bash
 # For CloudFront (recommended - faster):
-VITE_IMAGE_BASE_URL=https://d2iiwoaj8v8tqz.cloudfront.net
+VITE_IMAGE_BASE_URL=https://<your-cloudfront-domain>
 
 # For S3 direct access (fallback):
 # VITE_IMAGE_BASE_URL=https://ad-public-storage-data-viewer-ap-southeast-1-836322468413.s3.ap-southeast-1.amazonaws.com
