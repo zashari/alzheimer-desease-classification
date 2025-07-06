@@ -2,7 +2,14 @@
 
 # Script to configure CORS on S3 bucket for web access
 
-BUCKET_NAME="<your-bucket-name>"
+# Check if bucket name is provided via environment variable
+if [ -z "$AWS_S3_BUCKET_NAME" ]; then
+  echo "❌ Error: AWS_S3_BUCKET_NAME environment variable is not set"
+  echo "Please set it with: export AWS_S3_BUCKET_NAME=your-bucket-name"
+  exit 1
+fi
+
+BUCKET_NAME="$AWS_S3_BUCKET_NAME"
 
 echo "Setting up CORS configuration for bucket: ${BUCKET_NAME}"
 
@@ -35,7 +42,7 @@ if [ $? -eq 0 ]; then
   
   echo ""
   echo "Your S3 bucket is now configured to allow web access from any origin."
-  echo "Images can be accessed directly from: https://${BUCKET_NAME}.s3.ap-southeast-1.amazonaws.com"
+  echo "Images can be accessed directly from: https://${BUCKET_NAME}.s3.${AWS_REGION:-ap-southeast-1}.amazonaws.com"
 else
   echo "❌ Error applying CORS configuration"
   exit 1

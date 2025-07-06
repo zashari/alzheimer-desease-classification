@@ -2,7 +2,14 @@
 
 # Script to make S3 bucket objects publicly readable
 
-BUCKET_NAME="<your-bucket-name>"
+# Check if bucket name is provided via environment variable
+if [ -z "$AWS_S3_BUCKET_NAME" ]; then
+  echo "❌ Error: AWS_S3_BUCKET_NAME environment variable is not set"
+  echo "Please set it with: export AWS_S3_BUCKET_NAME=your-bucket-name"
+  exit 1
+fi
+
+BUCKET_NAME="$AWS_S3_BUCKET_NAME"
 
 echo "Making S3 bucket objects publicly accessible..."
 
