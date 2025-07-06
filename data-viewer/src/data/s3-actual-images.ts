@@ -5818,8 +5818,7 @@ export const S3_IMAGE_PATHS = [
   'assets/images/original-images/sagittal/val/CN/941_S_1194_sc_sagittal_z81.png',
   'assets/images/original-images/sagittal/val/CN/941_S_1197_m06_sagittal_z78.png',
   'assets/images/original-images/sagittal/val/CN/941_S_1197_m12_sagittal_z79.png',
-  'assets/images/original-images/sagittal/val/CN/941_S_1197_sc_sagittal_z76.png',
-  'assets/images/test-image.png'
+  'assets/images/original-images/sagittal/val/CN/941_S_1197_sc_sagittal_z76.png'
 ];
 
 // Helper function to get full S3 URL
@@ -5847,4 +5846,4 @@ export function parseS3Path(path: string) {
   return null;
 }
 
-export const TOTAL_IMAGES = 5815;
+export const TOTAL_IMAGES = 5814;

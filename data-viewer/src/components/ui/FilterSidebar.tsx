@@ -1,11 +1,5 @@
 import './FilterSidebar.css';
-
-export interface FilterState {
-  plane: 'axial' | 'coronal' | 'sagittal' | null;
-  version: 'original-images' | 'enhanced-images' | null;
-  class: 'CN' | 'AD' | null;
-  subset: 'train' | 'test' | 'val' | null;
-}
+import { type FilterState } from '../../types/index';
 
 interface FilterSidebarProps {
   isOpen: boolean;

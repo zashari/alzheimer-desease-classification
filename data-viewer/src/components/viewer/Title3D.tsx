@@ -1,8 +1,6 @@
 import { Text, Billboard } from '@react-three/drei';
 import { useMemo } from 'react';
-import { useThree } from '@react-three/fiber';
-import * as THREE from 'three';
-import type { FilterState } from './FilterSidebar';
+import type { FilterState } from '../../types/index';
 
 interface Title3DProps {
   filters: FilterState;

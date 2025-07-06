@@ -17,14 +17,12 @@ export function FreeCameraControls() {
   const [motionIntensity, setMotionIntensity] = useState(0);
   const movementTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const velocityRef = useRef({ x: 0, y: 0, zoom: 0 });
-  const lastPositionRef = useRef({ x: 0, y: 0, z: 0 });
   const momentumRef = useRef({ x: 0, y: 0, zoom: 0 });
   const dampingFactor = 0.85; // How quickly momentum decays
   
   // Zoom limits and sphere center
   const maxZoomOutDistance = 25; // Maximum distance from origin
   const sphereCenter = new THREE.Vector3(0, 0, 0); // Center of the sphere
-  const zoomOutThreshold = 20; // Distance threshold for showing/hiding title
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
