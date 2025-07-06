@@ -7,9 +7,9 @@ import { filterImages, sampleImages } from '../../utils/imageDataUtils';
 import { BatchLoadedImages } from './BatchLoadedImages';
 
 export function Scene({ 
-  onImageSelect
+  onImageClick
 }: { 
-  onImageSelect: (url: string | null, data?: any) => void;
+  onImageClick: (url: string | null, data?: any) => void;
 }) {
   const { filters } = useViewerStore();
   
@@ -96,7 +96,7 @@ export function Scene({
       <BatchLoadedImages 
         images={filteredImages} 
         positions={filePositions.positions}
-        onImageSelect={onImageSelect}
+        onImageClick={onImageClick}
       />
     </>
   );

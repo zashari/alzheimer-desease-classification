@@ -28,7 +28,7 @@ function App() {
     setFilters(newFilters);
   };
 
-  const handleImageSelect = (url: string | null, data?: any) => {
+  const handleImageClick = (url: string | null, data?: any) => {
     setSelectedImage(url, data);
   };
 
@@ -51,7 +51,7 @@ function App() {
       <Canvas id="webgl-renderer">
         <Suspense fallback={null}>
           <Scene 
-            onImageSelect={handleImageSelect} 
+            onImageClick={handleImageClick} 
           />
         </Suspense>
       </Canvas>

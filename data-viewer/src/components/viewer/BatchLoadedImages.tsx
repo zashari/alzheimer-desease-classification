@@ -7,13 +7,13 @@ import { useViewerStore } from '../../store/viewerStore';
 interface BatchLoadedImagesProps {
   images: ImageMetadata[];
   positions: { x: number; y: number; z: number }[];
-  onImageSelect: (url: string | null, data?: any) => void;
+  onImageClick: (url: string | null, data?: any) => void;
 }
 
 export function BatchLoadedImages({ 
   images, 
   positions, 
-  onImageSelect
+  onImageClick
 }: BatchLoadedImagesProps) {
   const [loadedCount, setLoadedCount] = useState(0);
   const batchSize = 25; // Load 25 images at a time
@@ -39,16 +39,16 @@ export function BatchLoadedImages({
     return () => clearInterval(timer);
   }, [images.length, batchSize, setIsLoading]);
 
-  // Update loading progress when loadedCount changes
-  useEffect(() => {
-    setLoadingProgress(loadedCount, images.length);
-  }, [loadedCount, images.length, setLoadingProgress]);
-  
   // Reset when images change
   useEffect(() => {
     setLoadedCount(0);
     setLoadingProgress(0, images.length);
   }, [images, setLoadingProgress]);
+
+  // Update loading progress when loadedCount changes
+  useEffect(() => {
+    setLoadingProgress(loadedCount, images.length);
+  }, [loadedCount, images.length, setLoadingProgress]);
   
   // Log progress
   useEffect(() => {
@@ -64,7 +64,7 @@ export function BatchLoadedImages({
           <File 
             imageUrl={image.url} 
             position={[positions[index].x, positions[index].y, positions[index].z]}
-            onImageClick={(url) => onImageSelect(url, image)}
+            onImageClick={(url) => onImageClick(url, image)}
           />
         </ErrorBoundary>
       ))}
