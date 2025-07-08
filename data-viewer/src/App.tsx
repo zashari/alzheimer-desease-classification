@@ -1,11 +1,12 @@
 
-import { useMemo, Suspense } from 'react';
+import { useMemo, Suspense, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import './App.css';
 import { Scene } from './components/viewer/Scene';
 import { ImageViewer } from './components/ui/ImageViewer';
 import { FilterSidebar } from './components/ui/FilterSidebar';
 import { LoadingAnimation } from './components/ui/LoadingAnimation';
+import { ServiceWorkerLoadingIndicator } from './components/ui/ServiceWorkerLoadingIndicator';
 import { useViewerStore } from './store/viewerStore';
 import { imageData, filterImages } from './utils/imageDataUtils';
 
@@ -15,9 +16,11 @@ function App() {
     selectedImage,
     selectedImageData,
     isLoading,
+    isServiceWorkerLoading,
     isFilterSidebarOpen,
     setFilters,
     setSelectedImage,
+    setServiceWorkerLoading,
     toggleFilterSidebar,
     setFilterSidebarOpen,
     clearSelectedImage
@@ -26,12 +29,37 @@ function App() {
   // Handle filter changes with loading state
   const handleFiltersChange = (newFilters: typeof filters) => {
     setFilters(newFilters);
+    
+    // Notify Service Worker to start tracking
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+      const filtered = filterImages(newFilters);
+      const displayCount = Math.min(filtered.length, 500);
+      navigator.serviceWorker.controller.postMessage({
+        type: 'START_TRACKING',
+        total: displayCount
+      });
+    }
   };
 
   const handleImageClick = (url: string | null, data?: any) => {
     setSelectedImage(url, data);
   };
 
+  const handleServiceWorkerLoadingComplete = () => {
+    setServiceWorkerLoading(false);
+  };
+
+  // Initialize Service Worker tracking on first load
+  useEffect(() => {
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+      const filtered = filterImages(filters);
+      const displayCount = Math.min(filtered.length, 500);
+      navigator.serviceWorker.controller.postMessage({
+        type: 'START_TRACKING',
+        total: displayCount
+      });
+    }
+  }, []); // Only run once on mount
 
   // Calculate filtered image count
   const totalFiltered = useMemo(() => {
@@ -47,7 +75,16 @@ function App() {
       >
         Filters
       </button>
-      {isLoading && <LoadingAnimation />}
+      
+      {/* Service Worker Loading - shows during caching phase */}
+      <ServiceWorkerLoadingIndicator 
+        isVisible={isServiceWorkerLoading}
+        totalImages={Math.min(totalFiltered, 500)}
+        onLoadingComplete={handleServiceWorkerLoadingComplete}
+      />
+      
+      {/* Regular loading animation - shows during batch rendering */}
+      {isLoading && !isServiceWorkerLoading && <LoadingAnimation />}
       <Canvas id="webgl-renderer">
         <Suspense fallback={null}>
           <Scene 

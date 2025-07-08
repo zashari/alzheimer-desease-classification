@@ -2,6 +2,13 @@
 const CACHE_NAME = 'alzheimer-images-v1';
 const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
+// Progress tracking
+let imageCacheProgress = {
+  total: 0,
+  cached: 0,
+  currentBatch: new Set()
+};
+
 // URLs to cache on install
 const urlsToCache = [
   '/',
@@ -94,6 +101,10 @@ self.addEventListener('fetch', (event) => {
               // Cache the response
               cache.put(request, modifiedResponse.clone()).then(() => {
                 console.log('Service Worker: Cached:', request.url);
+                
+                // Update progress tracking
+                imageCacheProgress.cached++;
+                broadcastProgress();
               });
               
               return networkResponse;
@@ -119,7 +130,23 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-// Message handler for manual cache management
+// Function to broadcast progress to all clients
+function broadcastProgress() {
+  const message = {
+    type: 'IMAGE_CACHE_PROGRESS',
+    cached: imageCacheProgress.cached,
+    total: imageCacheProgress.total
+  };
+  
+  // Send to all clients
+  self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+      client.postMessage(message);
+    });
+  });
+}
+
+// Message handler for manual cache management and progress tracking
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'CLEAR_CACHE') {
     event.waitUntil(
@@ -128,5 +155,35 @@ self.addEventListener('message', (event) => {
         event.ports[0].postMessage({ success: true });
       })
     );
+  } else if (event.data && event.data.type === 'START_TRACKING') {
+    // Initialize progress tracking for a new batch
+    imageCacheProgress.total = event.data.total || 0;
+    imageCacheProgress.cached = 0;
+    imageCacheProgress.currentBatch.clear();
+    console.log('Service Worker: Started tracking', imageCacheProgress.total, 'images');
+  } else if (event.data && event.data.type === 'BATCH_PROGRESS') {
+    // Forward batch progress to all clients
+    const message = {
+      type: 'BATCH_PROGRESS',
+      batched: event.data.batched,
+      total: event.data.total
+    };
+    
+    self.clients.matchAll().then(clients => {
+      clients.forEach(client => {
+        client.postMessage(message);
+      });
+    });
+  } else if (event.data && event.data.type === 'LOADING_COMPLETE') {
+    // Forward loading complete to all clients
+    const message = {
+      type: 'LOADING_COMPLETE'
+    };
+    
+    self.clients.matchAll().then(clients => {
+      clients.forEach(client => {
+        client.postMessage(message);
+      });
+    });
   }
 });
