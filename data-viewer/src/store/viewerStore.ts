@@ -19,7 +19,7 @@ interface ViewerState {
 
 export const useViewerStore = create<ViewerState>((set) => ({
   filters: {
-    plane: null,
+    plane: 'axial', // Default to axial plane
     version: null,
     class: null,
     subset: null

@@ -89,9 +89,8 @@ export function findImagePair(selectedImage: ImageMetadata): { original: ImageMe
 export function filterImages(filters: FilterState): ImageMetadata[] {
   let filtered = imageData;
   
-  if (filters.plane) {
-    filtered = filtered.filter(img => img.plane === filters.plane);
-  }
+  // Plane filter is always applied (never null)
+  filtered = filtered.filter(img => img.plane === filters.plane);
   
   if (filters.version) {
     filtered = filtered.filter(img => img.version === filters.version);

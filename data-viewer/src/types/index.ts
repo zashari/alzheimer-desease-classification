@@ -1,5 +1,5 @@
 export interface FilterState {
-  plane: 'axial' | 'coronal' | 'sagittal' | null;
+  plane: 'axial' | 'coronal' | 'sagittal'; // No null option - always has a value
   version: 'original-images' | 'enhanced-images' | null;
   class: 'CN' | 'AD' | null;
   subset: 'train' | 'test' | 'val' | null;
