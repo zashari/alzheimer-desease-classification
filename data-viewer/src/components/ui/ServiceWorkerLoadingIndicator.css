@@ -1,0 +1,187 @@
+.sw-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  color: white;
+}
+
+.sw-loading-container {
+  text-align: center;
+  max-width: 500px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sw-loading-header h3 {
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.sw-loading-header p {
+  font-size: 16px;
+  color: #b0b0b0;
+  margin-bottom: 30px;
+}
+
+.sw-progress-container {
+  margin-bottom: 30px;
+}
+
+.sw-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.sw-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.sw-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-20px); }
+  100% { transform: translateX(20px); }
+}
+
+.sw-progress-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4facfe;
+}
+
+.sw-phase-indicator {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  padding: 0 20px;
+}
+
+.sw-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.sw-phase:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: -50%;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: -1;
+}
+
+.sw-phase.complete:not(:last-child)::after {
+  background: #4facfe;
+}
+
+.sw-phase-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.sw-phase.active .sw-phase-dot {
+  background: #4facfe;
+  animation: pulse 1.5s infinite;
+}
+
+.sw-phase.complete .sw-phase-dot {
+  background: #4facfe;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.sw-phase span {
+  font-size: 12px;
+  color: #b0b0b0;
+  font-weight: 500;
+}
+
+.sw-phase.active span {
+  color: #4facfe;
+}
+
+.sw-phase.complete span {
+  color: #4facfe;
+}
+
+.sw-status-text {
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 25px;
+  font-weight: 500;
+}
+
+.sw-loading-tips {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+.sw-loading-tips p {
+  font-size: 14px;
+  color: #888;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .sw-loading-container {
+    max-width: 90%;
+    padding: 30px 20px;
+  }
+  
+  .sw-loading-header h3 {
+    font-size: 24px;
+  }
+  
+  .sw-phase-indicator {
+    padding: 0 10px;
+  }
+  
+  .sw-phase span {
+    font-size: 11px;
+  }
+}

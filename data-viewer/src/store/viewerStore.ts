@@ -6,11 +6,13 @@ interface ViewerState {
   selectedImage: string | null;
   selectedImageData: any;
   isLoading: boolean;
+  isServiceWorkerLoading: boolean;
   isFilterSidebarOpen: boolean;
   loadingProgress: { loaded: number; total: number };
   setFilters: (filters: FilterState) => void;
   setSelectedImage: (url: string | null, data?: any) => void;
   setIsLoading: (loading: boolean) => void;
+  setServiceWorkerLoading: (loading: boolean) => void;
   setFilterSidebarOpen: (open: boolean) => void;
   toggleFilterSidebar: () => void;
   clearSelectedImage: () => void;
@@ -27,12 +29,14 @@ export const useViewerStore = create<ViewerState>((set) => ({
   selectedImage: null,
   selectedImageData: null,
   isLoading: true,
+  isServiceWorkerLoading: true,
   isFilterSidebarOpen: false,
   loadingProgress: { loaded: 0, total: 0 },
   
   setFilters: (filters: FilterState) => set(() => ({ 
     filters, 
-    isLoading: true 
+    isLoading: true,
+    isServiceWorkerLoading: true
   })),
   
   setSelectedImage: (url: string | null, data?: any) => set({ 
@@ -41,6 +45,8 @@ export const useViewerStore = create<ViewerState>((set) => ({
   }),
   
   setIsLoading: (loading: boolean) => set({ isLoading: loading }),
+  
+  setServiceWorkerLoading: (loading: boolean) => set({ isServiceWorkerLoading: loading }),
   
   setFilterSidebarOpen: (open: boolean) => set({ isFilterSidebarOpen: open }),
   

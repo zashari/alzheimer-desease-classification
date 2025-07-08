@@ -54,10 +54,28 @@ export function BatchLoadedImages({
     setLoadingProgress(loadedCount, images.length);
   }, [loadedCount, images.length, setLoadingProgress]);
   
-  // Log progress
+  // Log progress and notify Service Worker
   useEffect(() => {
-    if (loadedCount > 0 && loadedCount < images.length) {
+    if (loadedCount > 0 && loadedCount <= images.length) {
       console.log(`Loading batch: ${loadedCount}/${images.length} images`);
+      
+      // Send batch progress to Service Worker for forwarding
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+          type: 'BATCH_PROGRESS',
+          batched: loadedCount,
+          total: images.length
+        });
+        
+        // If all images are loaded, notify completion
+        if (loadedCount === images.length) {
+          setTimeout(() => {
+            navigator.serviceWorker?.controller?.postMessage({
+              type: 'LOADING_COMPLETE'
+            });
+          }, 500);
+        }
+      }
     }
   }, [loadedCount, images.length]);
   
