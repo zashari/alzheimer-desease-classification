@@ -25,12 +25,15 @@ export function BatchLoadedImages({
       setLoadedCount(prev => {
         const next = Math.min(prev + batchSize, images.length);
         
-        if (next >= images.length) {
-          clearInterval(timer);
-          // Notify when loading is complete and hide loading screen
+        // Hide loading screen when first batch is loaded (not before)
+        if (prev === 0 && next > 0) {
           setTimeout(() => {
             setIsLoading(false);
-          }, 300); // Small delay for last batch to render
+          }, 100); // Small delay to ensure first batch renders
+        }
+        
+        if (next >= images.length) {
+          clearInterval(timer);
         }
         return next;
       });
@@ -39,10 +42,11 @@ export function BatchLoadedImages({
     return () => clearInterval(timer);
   }, [images.length, batchSize, setIsLoading]);
 
-  // Reset when images change
+  // Reset when images change - keep loading state true
   useEffect(() => {
     setLoadedCount(0);
     setLoadingProgress(0, images.length);
+    // Don't modify isLoading here - let it be controlled by setFilters and first batch
   }, [images, setLoadingProgress]);
 
   // Update loading progress when loadedCount changes
