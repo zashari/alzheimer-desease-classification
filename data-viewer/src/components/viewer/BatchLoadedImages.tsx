@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { File } from './File';
 import { ErrorBoundary } from '../ui/ErrorBoundary';
 import { type ImageMetadata } from '../../types/index';
 import { useViewerStore } from '../../store/viewerStore';
+
+// Global flag to prevent multiple completion messages
+let isCompletionSent = false;
 
 interface BatchLoadedImagesProps {
   images: ImageMetadata[];
@@ -18,6 +21,7 @@ export function BatchLoadedImages({
   const [loadedCount, setLoadedCount] = useState(0);
   const batchSize = 25; // Load 25 images at a time
   const { setLoadingProgress, setIsLoading } = useViewerStore();
+  const instanceId = useRef(Math.random().toString(36).substr(2, 9));
   
   useEffect(() => {
     // Load images in batches
@@ -46,7 +50,9 @@ export function BatchLoadedImages({
   useEffect(() => {
     setLoadedCount(0);
     setLoadingProgress(0, images.length);
-    // Don't modify isLoading here - let it be controlled by setFilters and first batch
+    // Reset completion flag when new images load
+    isCompletionSent = false;
+    console.log(`BatchLoadedImages instance ${instanceId.current} initialized with ${images.length} images`);
   }, [images, setLoadingProgress]);
 
   // Update loading progress when loadedCount changes
@@ -57,21 +63,25 @@ export function BatchLoadedImages({
   // Log progress and notify Service Worker
   useEffect(() => {
     if (loadedCount > 0 && loadedCount <= images.length) {
-      console.log(`Loading batch: ${loadedCount}/${images.length} images`);
+      console.log(`[${instanceId.current}] Loading batch: ${loadedCount}/${images.length} images`);
       
       // Send batch progress to Service Worker for forwarding
       if (navigator.serviceWorker && navigator.serviceWorker.controller) {
         navigator.serviceWorker.controller.postMessage({
           type: 'BATCH_PROGRESS',
           batched: loadedCount,
-          total: images.length
+          total: images.length,
+          instanceId: instanceId.current
         });
         
-        // If all images are loaded, notify completion
-        if (loadedCount === images.length) {
+        // If all images are loaded, notify completion (only once)
+        if (loadedCount === images.length && !isCompletionSent) {
+          isCompletionSent = true;
+          console.log(`[${instanceId.current}] Sending completion signal`);
           setTimeout(() => {
             navigator.serviceWorker?.controller?.postMessage({
-              type: 'LOADING_COMPLETE'
+              type: 'LOADING_COMPLETE',
+              instanceId: instanceId.current
             });
           }, 500);
         }

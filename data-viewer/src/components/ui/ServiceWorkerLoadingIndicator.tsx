@@ -49,9 +49,24 @@ export function ServiceWorkerLoadingIndicator({
       } else if (event.data?.type === 'BATCH_PROGRESS') {
         setLoadingState(prev => ({
           ...prev,
-          phase: prev.cached >= prev.total ? 'batching' : 'caching',
+          phase: 'batching',
           batched: event.data.batched
         }));
+        
+        // Auto-complete when batch reaches total
+        if (event.data.batched >= totalImages) {
+          setTimeout(() => {
+            setLoadingState(prevState => ({
+              ...prevState,
+              phase: 'complete'
+            }));
+            
+            // Notify parent that loading is complete
+            setTimeout(() => {
+              onLoadingComplete();
+            }, 500);
+          }, 1000); // Give time for images to render
+        }
       } else if (event.data?.type === 'LOADING_COMPLETE') {
         setLoadingState(prev => ({
           ...prev,
