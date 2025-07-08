@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import './ImageViewer.css';
-import type { ImageMetadata } from './Scene';
-import { findImagePair } from './Scene';
+import type { ImageMetadata } from '../../types/index';
+import { findImagePair } from '../../utils/imageDataUtils';
 
 interface ImageViewerProps {
   imageUrl: string | null;

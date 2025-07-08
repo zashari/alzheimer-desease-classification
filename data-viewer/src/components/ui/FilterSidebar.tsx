@@ -1,11 +1,5 @@
 import './FilterSidebar.css';
-
-export interface FilterState {
-  plane: 'axial' | 'coronal' | 'sagittal' | null;
-  version: 'original-images' | 'enhanced-images' | null;
-  class: 'CN' | 'AD' | null;
-  subset: 'train' | 'test' | 'val' | null;
-}
+import { type FilterState } from '../../types/index';
 
 interface FilterSidebarProps {
   isOpen: boolean;
@@ -37,7 +31,7 @@ export function FilterSidebar({
 
   const clearAllFilters = () => {
     onFiltersChange({
-      plane: null,
+      plane: 'axial', // Reset to default axial plane
       version: null,
       class: null,
       subset: null
@@ -58,12 +52,6 @@ export function FilterSidebar({
       <div className="filter-section">
         <h3>Brain Plane</h3>
         <div className="filter-options">
-          <button 
-            className={filters.plane === null ? 'active' : ''}
-            onClick={() => updateFilter('plane', null)}
-          >
-            All Planes
-          </button>
           <button 
             className={filters.plane === 'axial' ? 'active' : ''}
             onClick={() => updateFilter('plane', 'axial')}

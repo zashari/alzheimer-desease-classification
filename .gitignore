@@ -58,3 +58,19 @@ ENV/
 data-viewer/dist/
 data-viewer/node_modules/
 data-viewer/cloudfront-config.json
+data-viewer/.env
+data-viewer/.vite/
+
+# Environment variables and configuration
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# AWS configuration files
+bucket-policy.json
+cors-config.json
+
+# Temporary script files
+*.tmp

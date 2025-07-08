@@ -5,7 +5,14 @@
 
 set -e
 
-BUCKET_NAME="<your-bucket-name>"
+# Check if bucket name is provided via environment variable
+if [ -z "$AWS_S3_BUCKET_NAME" ]; then
+  echo "❌ Error: AWS_S3_BUCKET_NAME environment variable is not set"
+  echo "Please set it with: export AWS_S3_BUCKET_NAME=your-bucket-name"
+  exit 1
+fi
+
+BUCKET_NAME="$AWS_S3_BUCKET_NAME"
 LOCAL_DIR="temp-compress"
 OUTPUT_DIR="optimized-images"
 

@@ -4,8 +4,21 @@
 
 set -e
 
-BUCKET_NAME="<your-bucket-name>"
-CLOUDFRONT_URL="https://<your-cloudfront-domain>"
+# Check if required environment variables are set
+if [ -z "$AWS_S3_BUCKET_NAME" ]; then
+  echo "❌ Error: AWS_S3_BUCKET_NAME environment variable is not set"
+  echo "Please set it with: export AWS_S3_BUCKET_NAME=your-bucket-name"
+  exit 1
+fi
+
+if [ -z "$AWS_CLOUDFRONT_DOMAIN" ]; then
+  echo "❌ Error: AWS_CLOUDFRONT_DOMAIN environment variable is not set"
+  echo "Please set it with: export AWS_CLOUDFRONT_DOMAIN=your-cloudfront-domain.cloudfront.net"
+  exit 1
+fi
+
+BUCKET_NAME="$AWS_S3_BUCKET_NAME"
+CLOUDFRONT_URL="https://$AWS_CLOUDFRONT_DOMAIN"
 
 echo "🔍 Checking for missing images..."
 

@@ -56,7 +56,11 @@ export function PerformanceMonitor() {
     `;
     document.head.appendChild(style);
     
-    return () => document.head.removeChild(style);
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
   }, []);
 
   const fpsClass = fps >= 50 ? 'fps-good' : fps >= 30 ? 'fps-medium' : 'fps-bad';

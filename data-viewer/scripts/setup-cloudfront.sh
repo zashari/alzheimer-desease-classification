@@ -3,8 +3,15 @@
 # CloudFront setup script for S3 bucket
 # This script creates a CloudFront distribution for faster image delivery
 
-BUCKET_NAME="<your-bucket-name>"
-REGION="<your-region>"
+# Check if required environment variables are set
+if [ -z "$AWS_S3_BUCKET_NAME" ]; then
+  echo "❌ Error: AWS_S3_BUCKET_NAME environment variable is not set"
+  echo "Please set it with: export AWS_S3_BUCKET_NAME=your-bucket-name"
+  exit 1
+fi
+
+BUCKET_NAME="$AWS_S3_BUCKET_NAME"
+REGION="${AWS_REGION:-ap-southeast-1}"
 DISTRIBUTION_COMMENT="AD Medical Images CDN"
 ORIGIN_ID="S3-${BUCKET_NAME}"
 
